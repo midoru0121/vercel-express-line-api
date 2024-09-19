@@ -17,7 +17,7 @@ const CHANNEL_ID = process.env.CHANNEL_ID
 const CHANNEL_ACCESS_TOKEN = process.env.CHANNEL_ACCESS_TOKEN
 
 app.post("/webhook", (req, res) => {
-  console.log("console.log(req.body)", req.body)
+  console.log(req.body.events[0].messages)
   
   // ユーザーがボットにメッセージを送った場合、応答メッセージを送る
   if (req.body.events[0].type === "message") {
@@ -29,11 +29,11 @@ app.post("/webhook", (req, res) => {
       messages: [
         {
           type: "text",
-          text: "Hello, user",
+          text: "こんにちは、メッセージありがとうございます。",
         },
         {
           type: "text",
-          text: "May I help you?",
+          text: "ディスカバリーワンです。ご用件をお伺いします。",
         },
       ],
     });
