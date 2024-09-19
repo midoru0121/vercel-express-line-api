@@ -1,9 +1,15 @@
 const express = require('express');
 
 const app = express()
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+}));
+
 const PORT = 8000
 
 app.get('/', (req, res) => {
+  console.log("console.log(req.body)", req.body)
   res.send('Hello World')
 })
 
