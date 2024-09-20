@@ -4,12 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "tsx app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.0"
+    "@line/bot-sdk": "^9.4.0",
+    "express": "^4.21.0",
+    "git": "link:github.com:line/line-bot-sdk-nodejs.git"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.5",
+    "tsx": "^4.19.1"
   }
 }
