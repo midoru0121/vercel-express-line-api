@@ -67,8 +67,7 @@ app.post("/webhook", line.middleware(config), async (req, res) => {
 
 app.post("/pushMessage", async (req, res) => {
   try {
-    const callbackRequest: webhook.CallbackRequest = req.body;
-    const events: webhook.Event[] = callbackRequest.events;
+    console.log("LINE_DEVELOPER_USER_ID", LINE_DEVELOPER_USER_ID)
   
     
     await pushMessage({
