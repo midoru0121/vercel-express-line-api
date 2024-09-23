@@ -62,7 +62,7 @@ app.post("/webhook", line.middleware(config), async (req, res) => {
   
 });
 
-app.post("/pushMessage", line.middleware(config), async (req, res) => {
+app.post("/pushMessage", async (req, res) => {
   try {
     const callbackRequest: webhook.CallbackRequest = req.body;
     const events: webhook.Event[] = callbackRequest.events;
