@@ -15,38 +15,33 @@ type Args = {
 }
 
 export const pushMessage = async ({req, res, client, events} : Args): Promise<Response> => {  
-      // Process all the received events asynchronously.
-      const results = await Promise.all(
-        events.map(async (event: webhook.Event) => {
-          try {
+
+    try {
 
             
-            await client.pushMessage({
-                to: "ohto_atru",
-                messages: [{ type: 'text', text: 'hello, world' }]
-              });            
+        await client.pushMessage({
+            to: "ohto_atru",
+            messages: [{ type: 'text', text: 'hello, world' }]
+        });            
             
-          } catch (err: unknown) {
-            if (err instanceof HTTPFetchError) {
-              console.error(err.status);
-              console.error(err.headers.get('x-line-request-id'));
-              console.error(err.body);
-            } else if (err instanceof Error) {
-              console.error(err);
-            }
+    } catch (err: unknown) {
+        if (err instanceof HTTPFetchError) {
+            console.error(err.status);
+            console.error(err.headers.get('x-line-request-id'));
+            console.error(err.body);
+        } else if (err instanceof Error) {
+            console.error(err);
+        }
   
-            // Return an error message.
-            return res.status(500).json({
-              status: 'error',
-            });
-          }
-        })
-      );
-
-      // Return a successful message.
-      return res.status(200).json({
+        // Return an error message.
+        return res.status(500).json({
+            status: 'error',
+        });
+    }
+        
+    // Return a successful message.
+    return res.status(200).json({
         status: 'success',
-        results,
       });
     }
   
