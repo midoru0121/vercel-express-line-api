@@ -1,6 +1,5 @@
 // Import all dependencies, mostly using destructuring for better view.
 import {
-    type webhook,
     HTTPFetchError,
     type messagingApi,
   } from '@line/bot-sdk';
