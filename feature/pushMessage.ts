@@ -11,16 +11,16 @@ type Args = {
     req:  Request,
     res:  Response,
     client: messagingApi.MessagingApiClient
-    events:  webhook.Event[]
+    userId: string
 }
 
-export const pushMessage = async ({req, res, client, events} : Args): Promise<Response> => {  
+export const pushMessage = async ({req, res, client, userId } : Args): Promise<Response> => {  
 
     try {
 
             
         await client.pushMessage({
-            to: "ohto_atru",
+            to: userId,
             messages: [{ type: 'text', text: 'hello, world' }]
         });            
             

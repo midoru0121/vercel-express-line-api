@@ -11,6 +11,9 @@ const PORT = process.env.PORT || 8000
 const CHANNEL_SECRET = process.env.CHANNEL_SECRET || ""
 const CHANNEL_ACCESS_TOKEN = process.env.CHANNEL_ACCESS_TOKEN || ""
 
+// LINE開発者用のユーザID, pushMessageで使用
+const LINE_DEVELOPER_USER_ID = process.env.LINE_DEVELOPER_USER_ID || ""
+
 if (!CHANNEL_SECRET) {
   throw new Error("CHANNEL_SECRET is not defined")
 }
@@ -72,7 +75,8 @@ app.post("/pushMessage", async (req, res) => {
       req, 
       res, 
       client,
-      events
+      userId: LINE_DEVELOPER_USER_ID
+      
     })
   } catch (err) {
     console.error(err)
