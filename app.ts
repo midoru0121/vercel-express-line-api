@@ -1,7 +1,10 @@
+// https://line.github.io/line-bot-sdk-nodejs/
 import * as line from '@line/bot-sdk';
 import express from "express";
+
 import { execReply } from './feature/reply';
 import type { webhook } from '@line/bot-sdk';
+import { pushMessage } from './feature/pushMessage';
 
 // 環境変数を定義
 const PORT = process.env.PORT || 8000
@@ -9,11 +12,11 @@ const CHANNEL_SECRET = process.env.CHANNEL_SECRET || ""
 const CHANNEL_ACCESS_TOKEN = process.env.CHANNEL_ACCESS_TOKEN || ""
 
 if (!CHANNEL_SECRET) {
-  throw new Error(`${CHANNEL_SECRET} is not defined`)
+  throw new Error("CHANNEL_SECRET is not defined")
 }
 
 if (!CHANNEL_ACCESS_TOKEN) {
-  throw new Error(`${CHANNEL_ACCESS_TOKEN} is not defined`)
+  throw new Error("CHANNEL_ACCESS_TOKEN is not defined")
 }
 
 const app = express()
@@ -44,6 +47,7 @@ app.post("/webhook", line.middleware(config), async (req, res) => {
   try {
     const callbackRequest: webhook.CallbackRequest = req.body;
     const events: webhook.Event[] = callbackRequest.events;
+  
     
     await execReply({
       req, 
@@ -57,6 +61,27 @@ app.post("/webhook", line.middleware(config), async (req, res) => {
   }
   
 });
+
+app.post("/pushMessage", line.middleware(config), async (req, res) => {
+  try {
+    const callbackRequest: webhook.CallbackRequest = req.body;
+    const events: webhook.Event[] = callbackRequest.events;
+  
+    
+    await pushMessage({
+      req, 
+      res, 
+      client,
+      events
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).send('Something broke!')
+  }
+
+
+})
+
 
 app.listen(PORT, () => {
   console.log(`✅ Server is running on port ${PORT}`);

@@ -14,26 +14,16 @@ type Args = {
     events:  webhook.Event[]
 }
 
-export const execReply = async ({req, res, client, events} : Args): Promise<Response> => {  
+export const pushMessage = async ({req, res, client, events} : Args): Promise<Response> => {  
       // Process all the received events asynchronously.
       const results = await Promise.all(
         events.map(async (event: webhook.Event) => {
           try {
 
-            if (event.type !== 'message' || event.message.type !== 'text') {
-                return;
-            }
-
-            if (!event.replyToken) {
-                return;
-            }
-
-            await client.replyMessage({
-                replyToken:event.replyToken,
-                messages: [{
-                  type: 'text',
-                  text: event.message.text,
-                }],
+            
+            await client.pushMessage({
+                to: "ohto_atru",
+                messages: [{ type: 'text', text: 'hello, world' }]
               });            
             
           } catch (err: unknown) {
